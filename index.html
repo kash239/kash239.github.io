@@ -7,20 +7,20 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
 
     <style>
         /* =========================================
-           Premium Theme Variables
+           Premium Theme Variables & Base Config
            ========================================= */
         :root {
-            --bg-color: #0B0F19; /* Midnight Slate */
+            --bg-color: #080B11; /* Ultra-deep slate base */
             --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.07);
             --text-primary: #F8F9FA;
             --text-secondary: #A0ABC0;
             --accent-gold: #D4AF37;
-            --accent-glow: rgba(212, 175, 55, 0.4);
+            --accent-glow: rgba(212, 175, 55, 0.3);
         }
 
         * {
@@ -32,18 +32,88 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 209, 255, 0.05), transparent 25%);
             color: var(--text-primary);
             line-height: 1.7;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Animated Light Orbs Layer */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.15;
+            mix-blend-mode: screen;
+            animation: floatGlow 12s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-gold);
+            top: -10%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: #00d1ff;
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -4s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: #b58b22;
+            top: 45%;
+            left: 60%;
+            animation-delay: -8s;
+        }
+
+        /* Technical Mesh Grid Overlay */
+        .ambient-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translateY(0px) rotate(0deg) scale(1); }
+            100% { transform: translateY(60px) rotate(15deg) scale(1.15); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
+        }
+
+        /* Motion Entry Transitions */
+        .fade-in-entry {
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* =========================================
@@ -62,6 +132,18 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-gold);
         }
 
         /* =========================================
@@ -82,7 +164,6 @@
             line-height: 1.1;
         }
 
-        /* Animated Gradient Text */
         .gradient-text {
             background: linear-gradient(90deg, #D4AF37, #F3E5AB, #D4AF37);
             background-size: 200% auto;
@@ -114,16 +195,17 @@
         .hero-image {
             width: 300px;
             height: 300px;
-            border-radius: 20px; /* Modern squircle instead of basic circle */
+            border-radius: 24px;
             object-fit: cover;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 40px var(--accent-glow);
             transform: rotate(3deg);
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .hero-image:hover {
-            transform: rotate(0deg) scale(1.02);
+            transform: rotate(0deg) scale(1.04);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.7), 0 0 50px rgba(212, 175, 55, 0.5);
         }
 
         /* =========================================
@@ -132,13 +214,14 @@
         .marquee-container {
             width: 100vw;
             margin-left: calc(-50vw + 50%);
-            background: var(--glass-bg);
+            background: rgba(255, 255, 255, 0.02);
             border-top: 1px solid var(--glass-border);
             border-bottom: 1px solid var(--glass-border);
-            padding: 20px 0;
+            padding: 22px 0;
             overflow: hidden;
             white-space: nowrap;
             position: relative;
+            backdrop-filter: blur(5px);
         }
 
         .marquee-content {
@@ -168,9 +251,10 @@
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             text-align: center;
             margin-bottom: 12px;
+            letter-spacing: 0.5px;
         }
 
         .section-subhead {
@@ -187,28 +271,27 @@
             gap: 40px;
         }
 
-        /* Glassmorphism Effect */
         .project-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 40px;
-            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 175, 55, 0.1);
-            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.35);
         }
 
         .project-card h3 {
             font-size: 1.6rem;
             font-family: 'Playfair Display', serif;
             color: var(--accent-gold);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .project-card ul {
@@ -228,27 +311,32 @@
             color: var(--accent-gold);
             position: absolute;
             left: 0;
-            top: 3px;
+            top: 2px;
             font-size: 0.8rem;
         }
 
         /* =========================================
-           App 1: The Real Estate Underwriter
+           Interactive App 1: RE Underwriter
            ========================================= */
         .app-section {
-            padding: 60px 0;
+            padding: 80px 0;
         }
 
         .calculator-block {
             max-width: 850px;
             margin: 0 auto;
-            background: var(--glass-bg);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 50px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            transition: border-color 0.4s ease;
+        }
+
+        .calculator-block:hover {
+            border-color: rgba(212, 175, 55, 0.2);
         }
 
         .calc-grid {
@@ -273,20 +361,21 @@
         }
 
         .input-group input {
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.35);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             padding: 14px 18px;
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
         }
 
         .input-group input:focus {
             outline: none;
             border-color: var(--accent-gold);
-            box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 14px rgba(212, 175, 55, 0.3);
         }
 
         .action-btn {
@@ -295,20 +384,20 @@
             background: linear-gradient(90deg, #D4AF37, #B58B22);
             border: none;
             border-radius: 14px;
-            color: #0B0F19;
+            color: #080B11;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 1rem;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s;
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s;
             margin-bottom: 40px;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
         }
 
         .results-box {
@@ -322,9 +411,15 @@
 
         .result-item {
             padding: 20px 15px;
-            background: rgba(255,255,255,0.01);
+            background: rgba(255, 255, 255, 0.01);
             border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .calculator-block:hover .result-item {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.05);
         }
 
         .result-item label {
@@ -344,8 +439,135 @@
         }
 
         /* =========================================
-           App 2: finEase Vocabulary Cards
+           Interactive App 2: finEase Gateway Portal
            ========================================= */
+        .finease-portal {
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            padding: 60px 40px;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            backdrop-filter: blur(16px);
+        }
+
+        .portal-icon {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            display: block;
+            animation: pulseGlow 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            from { transform: scale(1); filter: drop-shadow(0 0 2px var(--accent-gold)); }
+            to { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--accent-gold)); }
+        }
+
+        .portal-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 18px 45px;
+            background: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .portal-btn:hover {
+            background: linear-gradient(90deg, #D4AF37, #B58B22);
+            color: #080B11;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.35);
+        }
+
+        /* =========================================
+           Extended Sub-Page: finEase Web Application Dashboard
+           ========================================= */
+        #finease-app-view {
+            position: relative;
+            width: 100%;
+            background-color: var(--bg-color);
+            padding: 60px 0 120px 0;
+            z-index: 100;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 25px;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+            transform: translateX(-4px);
+        }
+
+        /* Segment Control Layout Matrix */
+        .category-selector-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .category-trigger {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 16px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .category-trigger.active {
+            background: linear-gradient(90deg, #D4AF37, #B58B22);
+            color: #080B11;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* 3D Flippable Vocabulary Layout Framework */
         .finease-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -355,7 +577,7 @@
 
         .flip-card {
             background-color: transparent;
-            height: 260px;
+            height: 280px;
             cursor: pointer;
         }
 
@@ -373,7 +595,7 @@
         }
 
         .flip-card:not(.flipped):hover .flip-card-inner {
-            transform: translateY(-4px) scale(1.01);
+            transform: translateY(-5px);
         }
 
         .flip-front, .flip-back {
@@ -382,7 +604,7 @@
             height: 100%;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            border-radius: 20px;
+            border-radius: 24px;
             border: 1px solid var(--glass-border);
             padding: 35px;
             display: flex;
@@ -392,20 +614,23 @@
         }
 
         .flip-front {
-            background: var(--glass-bg);
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.3s;
         }
 
         .flip-card:hover .flip-front {
-            border-color: rgba(212, 175, 55, 0.25);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
         .flip-front h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: var(--text-primary);
             font-weight: 600;
+            line-height: 1.3;
         }
 
         .flip-hint {
@@ -413,24 +638,26 @@
             color: var(--accent-gold);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-top: 18px;
+            margin-top: 20px;
             opacity: 0.8;
+            font-weight: 500;
         }
 
         .flip-back {
-            background: #101626;
+            background: #0f1422;
+            border-color: rgba(212, 175, 55, 0.2);
             transform: rotateY(180deg);
             text-align: left;
             justify-content: flex-start;
             align-items: flex-start;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
             overflow-y: auto;
         }
 
         .flip-back p {
             font-size: 0.9rem;
             margin-bottom: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
             color: #E2E8F0;
         }
 
@@ -448,20 +675,128 @@
         }
 
         /* =========================================
-           Footer
+           Pop Quiz Simulation Dashboard Framework
+           ========================================= */
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 45px;
+            max-width: 800px;
+            margin: 0 auto;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .quiz-type {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .quiz-scenario {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            border-radius: 16px;
+            border-left: 4px solid var(--accent-gold);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .quiz-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--glass-border);
+            padding: 18px 24px;
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateX(4px);
+        }
+
+        .quiz-option.correct {
+            background: rgba(46, 204, 113, 0.12) !important;
+            border-color: #2ecc71 !important;
+            color: #2ecc71;
+            font-weight: 500;
+        }
+
+        .quiz-option.wrong {
+            background: rgba(231, 76, 60, 0.12) !important;
+            border-color: #e74c3c !important;
+            color: #e74c3c;
+        }
+
+        .quiz-explanation {
+            margin-top: 25px;
+            padding: 24px;
+            background: rgba(212, 175, 55, 0.04);
+            border: 1px dashed rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-nav-btn {
+            margin-top: 30px;
+            padding: 14px 35px;
+            background: var(--text-primary);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            float: right;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-nav-btn:hover {
+            background: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        .score-display {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        /* =========================================
+           Footer / Global Utility Triggers
            ========================================= */
         footer {
             text-align: center;
             padding: 80px 0 40px;
             border-top: 1px solid var(--glass-border);
-            margin-top: 40px;
+            margin-top: 60px;
         }
 
         .btn {
             display: inline-block;
             padding: 16px 40px;
             background: linear-gradient(90deg, #D4AF37, #B58B22);
-            color: #000;
+            color: #080B11;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
@@ -472,7 +807,7 @@
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
         }
 
         .btn-outline {
@@ -486,228 +821,433 @@
         }
 
         /* =========================================
-           Responsive Settings
+           Media Layout Adjustments
            ========================================= */
         @media (max-width: 1024px) {
-            .finease-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .finease-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 900px) {
             .hero { flex-direction: column-reverse; text-align: center; }
             .projects-grid { grid-template-columns: 1fr; }
             .hero-image { transform: rotate(0); margin-bottom: 20px; }
+            .hero-text h1 { font-size: 3rem; }
+            .category-selector-wrapper { border-radius: 24px; grid-template-columns: 1fr; gap: 8px; }
+            .category-trigger { padding: 12px; }
         }
 
         @media (max-width: 768px) {
-            .calc-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .results-box {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .finease-grid {
-                grid-template-columns: 1fr;
-            }
-            .calculator-block {
-                padding: 30px 20px;
-            }
+            .calc-grid { grid-template-columns: 1fr; gap: 20px; }
+            .results-box { grid-template-columns: 1fr; gap: 16px; }
+            .finease-grid { grid-template-columns: 1fr; }
+            .calculator-block { padding: 30px 20px; }
+            .quiz-card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="logo">Kashish Parekh</div>
-        </header>
-
-        <section class="hero">
-            <div class="hero-text">
-                <h1>Hi, I'm <span class="gradient-text">Kashish.</span></h1>
-                <h2>Finance & Accounting Undergraduate • Real Estate Concentration • DEC 2027 </h2>
-                <p>I am an Accounting and Finance student at Rutgers Business School with a concentration in Real Estate. I specialize in turning complex data into actionable insights, bridging the gap between brand architecture and rigorous financial modeling. I am actively seeking internship opportunities to contribute to meaningful business decisions.</p>
-            </div>
-            <img src="Assets/ProfilePic.jpg" alt="Kashish Parekh" class="hero-image" onerror="this.src='https://via.placeholder.com/300x300/1c1c1c/D4AF37?text=Photo+Missing'">
-        </section>
+    <div class="ambient-bg">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
     </div>
 
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <span>FINANCIAL MODELING</span> <span>✦</span> 
-            <span>FINANCIAL FORECASTING</span> <span>✦</span> 
-            <span>CFA NEW YORK SOCIETY</span> <span>✦</span> 
-            <span>REAL ESTATE PRIVATE EQUITY</span> <span>✦</span> 
-            <span>CORPORATE AUDIT</span> <span>✦</span>
-            <span>FINANCIAL MODELING</span> <span>✦</span> 
-            <span>FINANCIAL FORECASTING</span> <span>✦</span> 
-            <span>CFA NEW YORK SOCIETY</span> <span>✦</span> 
-            <span>REAL ESTATE PRIVATE EQUITY</span> <span>✦</span> 
-            <span>CORPORATE AUDIT</span> <span>✦</span>
+    <div id="main-portfolio-view">
+        <div class="container">
+            <header>
+                <div class="logo">Kashish Parekh</div>
+            </header>
+
+            <section class="hero fade-in-entry">
+                <div class="hero-text">
+                    <h1>Hi, I'm <span class="gradient-text">Kashish.</span></h1>
+                    <h2>Finance & Accounting Undergraduate • Real Estate Concentration • DEC 2027 </h2>
+                    <p>I am an Accounting and Finance student at Rutgers Business School with a concentration in Real Estate. I specialize in turning complex data into actionable insights, bridging the gap between brand architecture and rigorous financial modeling. I am actively seeking internship opportunities to contribute to meaningful business decisions.</p>
+                </div>
+                <img src="Assets/ProfilePic.jpg" alt="Kashish Parekh" class="hero-image" onerror="this.src='https://via.placeholder.com/300x300/1c1c1c/D4AF37?text=Photo+Missing'">
+            </section>
+        </div>
+
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <span>FINANCIAL MODELING</span> <span>✦</span> 
+                <span>FINANCIAL FORECASTING</span> <span>✦</span> 
+                <span>CFA NEW YORK SOCIETY</span> <span>✦</span> 
+                <span>REAL ESTATE PRIVATE EQUITY</span> <span>✦</span> 
+                <span>CORPORATE AUDIT</span> <span>✦</span>
+                <span>FINANCIAL MODELING</span> <span>✦</span> 
+                <span>FINANCIAL FORECASTING</span> <span>✦</span> 
+                <span>CFA NEW YORK SOCIETY</span> <span>✦</span> 
+                <span>REAL ESTATE PRIVATE EQUITY</span> <span>✦</span> 
+                <span>CORPORATE AUDIT</span> <span>✦</span>
+            </div>
+        </div>
+
+        <div class="container">
+            <section class="projects fade-in-entry">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-subhead">Academic case studies combining corporate strategy and financial frameworks.</p>
+                <div class="projects-grid">
+                    
+                    <div class="project-card">
+                        <h3>Brand Strategy: Personalized Cosmetics</h3>
+                        <ul>
+                            <li>Developed a business plan for a personalized cosmetics brand based on skin type and tone.</li>
+                            <li>Designed and launched a "Beginner’s Kit" to improve customer accessibility.</li>
+                            <li>Conducted SWOT and competitive analysis of major brands (Fenty Beauty, Glossier, L’Oréal).</li>
+                            <li>Built a full market strategy including segmentation, targeting, positioning, and 4Ps.</li>
+                            <li>Created financial projections with revenue forecasts and a 25,000-unit breakeven analysis.</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>Systems Architecture: Database Build</h3>
+                        <ul>
+                            <li>Documented 5+ business processes using BPMN to identify operational risks and inefficiencies.</li>
+                            <li>Designed an integrated data model using UML class diagrams and REA framework.</li>
+                            <li>Built a prototype database in Microsoft Access by transforming financial data from Excel.</li>
+                            <li>Developed complex queries to auto-generate income statements and balance sheets.</li>
+                            <li>Analyzed financial performance using ratio analysis to provide insights on growth opportunities.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="app-section">
+                <h2 class="section-title">The Real Estate Underwriter</h2>
+                <p class="section-subhead">A functional property assessment environment evaluating investment quality parameters instantly.</p>
+                
+                <div class="calculator-block">
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label for="propPrice">Purchase Price ($)</label>
+                            <input type="number" id="propPrice" value="500000" placeholder="e.g. 500000">
+                        </div>
+                        <div class="input-group">
+                            <label for="propDown">Down Payment (%)</label>
+                            <input type="number" id="propDown" value="20" placeholder="e.g. 20">
+                        </div>
+                        <div class="input-group">
+                            <label for="propRent">Annual Gross Rental Income ($)</label>
+                            <input type="number" id="propRent" value="48000" placeholder="e.g. 48000">
+                        </div>
+                        <div class="input-group">
+                            <label for="propExpenses">Annual Operating Expenses ($)</label>
+                            <input type="number" id="propExpenses" value="16000" placeholder="e.g. 16000">
+                        </div>
+                    </div>
+                    
+                    <button class="action-btn" onclick="underwriteAssetDeal()">Underwrite Asset Deal</button>
+                    
+                    <div class="results-box">
+                        <div class="result-item">
+                            <label>Net Operating Income</label>
+                            <div class="result-val" id="outNoi">$32,000</div>
+                        </div>
+                        <div class="result-item">
+                            <label>Capitalization Rate</label>
+                            <div class="result-val" id="outCap">6.40%</div>
+                        </div>
+                        <div class="result-item">
+                            <label>Cash-on-Cash Return</label>
+                            <div class="result-val" id="outCoc">4.00%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="app-section">
+                <h2 class="section-title">finEase</h2>
+                <p class="section-subhead">Complex financial market mechanics, decoded simply.</p>
+                
+                <div class="finease-portal">
+                    <span class="portal-icon">🏛️</span>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px;">The Interactive Financial Lexicon & Case Simulator</h3>
+                    <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto; font-weight: 300;">Dive deep into the core technical concepts required for Accounting and Finance professionals, or challenge your modeling expertise inside the pop quiz simulator environment.</p>
+                    <button class="portal-btn" onclick="switchView('app')">Explore finEase Module →</button>
+                </div>
+            </section>
+
+            <footer>
+                <div style="margin-bottom: 40px;">
+                    <a href="https://www.linkedin.com/in/kashishparekh-ru/" target="_blank" class="btn">Connect on LinkedIn</a>
+                    <a href="Assets/Resume.pdf" target="_blank" class="btn btn-outline">View Resume</a>
+                </div>
+                <p style="color: #A0ABC0; font-size: 0.9rem;">&copy; 2026 Kashish Parekh.</p>
+            </footer>
         </div>
     </div>
 
-    <div class="container">
-        <section class="projects">
-            <h2 class="section-title">Projects</h2>
-            <p class="section-subhead">Academic case studies combining corporate strategy and financial frameworks.</p>
-            <div class="projects-grid">
-                
-                <div class="project-card">
-                    <h3>Brand Strategy: Personalized Cosmetics</h3>
-                    <ul>
-                        <li>Developed a business plan for a personalized cosmetics brand based on skin type and tone.</li>
-                        <li>Designed and launched a "Beginner’s Kit" to improve customer accessibility.</li>
-                        <li>Conducted SWOT and competitive analysis of major brands (Fenty Beauty, Glossier, L’Oréal).</li>
-                        <li>Built a full market strategy including segmentation, targeting, positioning, and 4Ps.</li>
-                        <li>Created financial projections with revenue forecasts and a 25,000-unit breakeven analysis.</li>
-                    </ul>
-                </div>
 
-                <div class="project-card">
-                    <h3>Systems Architecture: Database Build</h3>
-                    <ul>
-                        <li>Documented 5+ business processes using BPMN to identify operational risks and inefficiencies.</li>
-                        <li>Designed an integrated data model using UML class diagrams and REA framework.</li>
-                        <li>Built a prototype database in Microsoft Access by transforming financial data from Excel.</li>
-                        <li>Developed complex queries to auto-generate income statements and balance sheets.</li>
-                        <li>Analyzed financial performance using ratio analysis to provide insights on growth opportunities.</li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="app-section">
-            <h2 class="section-title">The Real Estate Underwriter</h2>
-            <p class="section-subhead">A functional property assessment environment evaluating investment quality parameters instantly.</p>
+    <div id="finease-app-view" style="display: none;">
+        <div class="container">
             
-            <div class="calculator-block">
-                <div class="calc-grid">
-                    <div class="input-group">
-                        <label for="propPrice">Purchase Price ($)</label>
-                        <input type="number" id="propPrice" value="500000" placeholder="e.g. 500000">
-                    </div>
-                    <div class="input-group">
-                        <label for="propDown">Down Payment (%)</label>
-                        <input type="number" id="propDown" value="20" placeholder="e.g. 20">
-                    </div>
-                    <div class="input-group">
-                        <label for="propRent">Annual Gross Rental Income ($)</label>
-                        <input type="number" id="propRent" value="48000" placeholder="e.g. 48000">
-                    </div>
-                    <div class="input-group">
-                        <label for="propExpenses">Annual Operating Expenses ($)</label>
-                        <input type="number" id="propExpenses" value="16000" placeholder="e.g. 16000">
-                    </div>
+            <div class="app-header">
+                <div>
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--accent-gold);">finEase Interactive</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 300;">Comprehensive learning layout for accounting and corporate finance professionals.</p>
                 </div>
-                
-                <button class="action-btn" onclick="underwriteAssetDeal()">Underwrite Asset Deal</button>
-                
-                <div class="results-box">
-                    <div class="result-item">
-                        <label>Net Operating Income</label>
-                        <div class="result-val" id="outNoi">$32,000</div>
-                    </div>
-                    <div class="result-item">
-                        <label>Capitalization Rate</label>
-                        <div class="result-val" id="outCap">6.40%</div>
-                    </div>
-                    <div class="result-item">
-                        <label>Cash-on-Cash Return</label>
-                        <div class="result-val" id="outCoc">4.00%</div>
-                    </div>
-                </div>
+                <button class="back-btn" onclick="switchView('portfolio')">← Back to Portfolio</button>
             </div>
-        </section>
 
-        <section class="app-section">
-            <h2 class="section-title">finEase</h2>
-            <p class="section-subhead">Complex financial market mechanics, decoded simply. Click cards to reveal interactive context.</p>
-            
-            <div class="finease-grid">
-                <div class="flip-card" onclick="toggleVocabularyCard(this)">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <h3>Depreciation</h3>
-                            <div class="flip-hint">Click to Decode</div>
-                    </div>
-                    <div class="flip-back">
-                            <p><strong>Definition:</strong> The systematic allocation of the cost of a tangible asset over its useful lifespan due to wear and tear.</p>
-                            <p><strong>Real-World Example:</strong> Purchasing a brand-new car; the moment you drive it off the lot, its value instantly drops.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card" onclick="toggleVocabularyCard(this)">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <h3>Liquidity</h3>
-                            <div class="flip-hint">Click to Decode</div>
-                    </div>
-                    <div class="flip-back">
-                            <p><strong>Definition:</strong> The relative speed and ease with which an asset can be converted directly into cash without losing its value.</p>
-                            <p><strong>Real-World Example:</strong> A checking account balance is highly liquid; a commercial building takes months to sell, making it highly illiquid.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card" onclick="toggleVocabularyCard(this)">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <h3>Capital Gains</h3>
-                            <div class="flip-hint">Click to Decode</div>
-                    </div>
-                    <div class="flip-back">
-                            <p><strong>Definition:</strong> The net profit earned from selling an asset for a price higher than its initial purchase cost.</p>
-                            <p><strong>Real-World Example:</strong> Buying a share of stock at $10 and selling it later to another investor when the market price hits $50.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card" onclick="toggleVocabularyCard(this)">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <h3>Amortization</h3>
-                            <div class="flip-hint">Click to Decode</div>
-                    </div>
-                    <div class="flip-back">
-                            <p><strong>Definition:</strong> An accounting framework used to systematically reduce the cost basis of an intangible asset or pay down loan obligations via equal monthly installments.</p>
-                            <p><strong>Real-World Example:</strong> A fixed car loan payment where each month a portion pays off the calculated interest and the rest reduces the original debt principal.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card" onclick="toggleVocabularyCard(this)">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <h3>Stocks & Equities</h3>
-                            <div class="flip-hint">Click to Decode</div>
-                    </div>
-                    <div class="flip-back">
-                            <p><strong>Definition:</strong> Securities representing fractional ownership units in a public corporation, entitling the holder to proportional claims on corporate residual earnings.</p>
-                            <p><strong>Real-World Example:</strong> Owning shares of Apple; you legally own a micro-percentage of the business and profit directly when product innovation drives stock appreciation.</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="category-selector-wrapper">
+                <button id="tab-accounting" class="category-trigger active" onclick="activateCategory('accounting')">Accounting Core</button>
+                <button id="tab-finance" class="category-trigger" onclick="activateCategory('finance')">Finance Analytics</button>
+                <button id="tab-quiz" class="category-trigger" onclick="activateCategory('quiz')">Pop Quiz Challenge</button>
             </div>
-        </section>
 
-        <footer>
-            <div style="margin-bottom: 40px;">
-                <a href="https://www.linkedin.com/in/kashishparekh-ru/" target="_blank" class="btn">Connect on LinkedIn</a>
-                <a href="Assets/Resume.pdf" target="_blank" class="btn btn-outline">View Resume</a>
+            <div id="lexicon-cards-grid" class="finease-grid">
+                </div>
+
+            <div id="quiz-engine-view" style="display: none;" class="fade-in-entry">
+                <div id="quiz-card-target" class="quiz-card">
+                    </div>
             </div>
-            <p style="color: #A0ABC0; font-size: 0.9rem;">&copy; 2026 Kashish Parekh.</p>
-        </footer>
+
+        </div>
     </div>
+
 
     <script>
         /**
-         * Real Estate Underwriting Engine
+         * Core Academic Portfolio Extended Vocabulary Structural Array Dataset Map
+         */
+        const lexiconDataset = {
+            accounting: [
+                { term: "Assets", def: "Resources owned or controlled by an entity expected to generate future economic value.", eg: "Cash reserves, production facility equipment, accounts receivable, and property holdings." },
+                { term: "Liabilities", def: "Legal financial obligations or debts a company owes to external third parties during operation.", eg: "Commercial bank loans, accounts payable lines, and accrued tax obligations." },
+                { term: "Owner's Equity", def: "The residual interest value in corporate assets remaining after deducting all corresponding liabilities.", eg: "Common stock holdings plus accumulated retained earnings balance frameworks." },
+                { term: "Accrual Accounting", def: "System where revenues/expenses are logged when transaction occurrences materialize, irrespective of actual cash movement timelines.", eg: "Recording service contract earnings instantly upon completion before invoicing payment collections." },
+                { term: "Depreciation", def: "The systematic allocation protocol tracking the declining asset value of tangible property across its calculated operational lifespan.", eg: "Amortizing down corporate vehicle book values predictably each year to adjust for wear." },
+                { term: "Amortization", def: "The periodic structural reduction tracking cost-basis frameworks of intangible assets or long-term loan payment matrices.", eg: "Writing off digital proprietary patent licenses across a designated multi-year structural lifespan." },
+                { term: "General Ledger", def: "The master recording database tracking execution logs of every accounting entry throughout a business lifecycle.", eg: "The ultimate structured log recording tracking cash accounts, equity stakes, and inventory books." },
+                { term: "GAAP vs IFRS", def: "Standardized metric frameworks governing financial layout guidelines globally (GAAP for US markets, IFRS internationally).", eg: "Using LIFO inventory valuation regulations under strict US GAAP which remains barred via IFRS policies." },
+                { term: "Accounts Receivable", def: "Outstanding liquid credits tracking asset claims from clients who secured products or operational services on credit timelines.", eg: "A multi-thousand dollar invoice balance pending corporate clearance within standard Net-30 day cycles." },
+                { term: "Retained Earnings", def: "Cumulative net profitability metrics held inside operations for project reinvestment allocation rather than dividend payouts.", eg: "Using yearly corporate profit yields directly to bankroll research initiatives instead of paying stockholders." }
+            ],
+            finance: [
+                { term: "Liquidity", def: "The velocity profile tracking how seamlessly structures can flip assets back into standard cash values without pricing penalties.", eg: "A checking account layout represents peak asset liquidity; industrial commercial real estate represents severe illiquidity." },
+                { term: "Capital Gains", def: "Net profit metrics captured when unloading investments or property assets for a price outstripping initial entry costs.", eg: "Acquiring stock tranches at a $10 baseline valuation and liquidating to market buyers at a premium $50 price point." },
+                { term: "Time Value of Money (TVM)", def: "The structural reality that money holding present viability commands greater valuation weight than identical future tranches due to interest potential.", eg: "Investing $1,000 today to harvest yield returns vs holding un-allocated currency exposed to purchasing-power decay." },
+                { term: "Net Present Value (NPV)", def: "The cumulative net difference parameter mapping out present-value project inflows against present baseline capital spending outlays.", eg: "An enterprise computing an NPV value exceeding $0 to logically validate greenlighting infrastructure investments." },
+                { term: "Internal Rate of Return (IRR)", def: "The precise compounded metric yield output tracking point thresholds where NPV outputs flatten exactly to zero.", eg: "A real estate group evaluating multiple assets to acquire the acquisition delivering the superior projected internal metrics." },
+                { term: "Stocks & Equities", def: "Securities representing clean fractional ownership percentages in public or private enterprise entities.", eg: "Owning stock tranches of Apple, granting voting rights and equity appreciation metrics over time." },
+                { term: "Bonds & Fixed Income", def: "Debt security tracking contracts where investors act as lenders to institutional entities in return for fixed yield interest parameters.", eg: "Acquiring US Treasury instruments to extract reliable semi-annual coupon yields over fixed 10-year timelines." },
+                { term: "Leverage", def: "The tactical deployment of structured external debt capital instruments designed to amplify potential project returns.", eg: "Utilizing 80% commercial loan debt tracking real estate acquisitions to limit self-funded cash equity positioning." },
+                { term: "Market Capitalization", def: "The total dollar-denominated financial value tracking an active operation's aggregate outstanding public share float.", eg: "Multiplying 1 million shares outstanding by a current trading valuation threshold of $50 to yield a $50M market cap." },
+                { term: "Weighted Cost of Capital (WACC)", def: "The combined blended financial hurdle mapping out structural cost performance constraints tracking debt and equity financing pools.", eg: "A firm utilizing an 8% WACC threshold as the absolute minimum barrier rate when sizing capital expansion risk vectors." }
+            ]
+        };
+
+        /**
+         * Real-World Case Simulation Complex Corporate Quiz Arrays Database
+         */
+        const quizDataset = [
+            {
+                type: "Finance & Real Estate Underwriting",
+                title: "The Cap Rate Compression Dilemma",
+                scenario: "You are underwriting a commercial asset priced at $2,000,000 that generates a fixed Net Operating Income (NOI) of $120,000. Market comps trade at a standard 5.00% Cap Rate. Suddenly, macroeconomic tightening cycles cause financing mortgage interest rates to spike significantly.",
+                question: "What is the current Cap Rate of this target asset, and how will the rising interest rate landscape typically impact its asset value if NOI remains constant?",
+                options: [
+                    "Current Cap Rate is 5.00%; values remain fixed because interest rate adjustments run independently of local cap valuations.",
+                    "Current Cap Rate is 6.00%; rising interest rates pressure cap rates upward, driving down market valuation if NOI is flat.",
+                    "Current Cap Rate is 6.00%; mortgage adjustments compress cap requirements further, inflating valuation premiums automatically.",
+                    "Current Cap Rate is 16.6%; tracking down-payment metrics directly across long-term macro indexes."
+                ],
+                correct: 1,
+                explanation: "Cap Rate = NOI / Purchase Price ($120,000 / $2,000,000 = 6.00%). When interest costs spike, investors demand superior returns to cover higher capital expenses. This shifts target Cap Rates upward, shrinking the overall purchase price valuation unless the property's gross rents expand."
+            },
+            {
+                type: "Financial Accounting Core",
+                title: "The Accrual Revenue Recognition Entry",
+                scenario: "On December 28, 2026, Rutgers Consults delivers full performance hand-off of a systems database prototype worth $100,000. The enterprise sends out the final billing statement on January 5, 2027, and receives the client's direct wire cash payout on February 12, 2027.",
+                question: "Under standard US GAAP Accrual guidelines, when must this transaction be logged into revenue, and what is the ledger transaction on the December 31, 2026 Balance Sheet statement?",
+                options: [
+                    "Recognize in February 2027 when liquid cash is fully settled; no accounting entries are recorded in fiscal year 2026.",
+                    "Recognize in January 2027 when processing the physical statement document layout.",
+                    "Recognize in December 2026; debiting Accounts Receivable to increase operational assets and crediting Revenue to expand net equity.",
+                    "Recognize divided 50/50 evenly across both fiscal periods to preserve tracking balance consistency."
+                ],
+                correct: 2,
+                explanation: "Accrual principles command recognizing revenue in the exact period performance obligations are fully completed (December 2026), regardless of when cash physically transfers. The balance sheet records this via a debit to Accounts Receivable and a credit to Revenue on the income statement."
+            },
+            {
+                type: "Corporate Finance Analytics",
+                title: "The Hurdle Rate Asset Selection Challenge",
+                scenario: "A firm's real estate group evaluates a capital project infrastructure buildout. Financial projection modeling computes a projected Internal Rate of Return (IRR) of 11.20%. Simultaneously, corporate treasury tracks the Weighted Average Cost of Capital (WACC) baseline at 13.00%.",
+                question: "Applying corporate finance guidelines, should the investment board fund this capital expansion project, and what does this scenario say about the project's Net Present Value (NPV)?",
+                options: [
+                    "Approve the initiative; any return performance clearing a 10% baseline automatically registers positive metrics.",
+                    "Reject the project; because the IRR (11.20%) falls below the financial cost of capital hurdle (WACC 13.00%), registering a negative NPV and eroding shareholder wealth.",
+                    "Approve the initiative; cost of capital financing calculations perform separately from project performance vectors.",
+                    "Hold execution timelines and structure interest-only adjustments to scale up accounting yields artificially."
+                ],
+                correct: 1,
+                explanation: "An infrastructure deployment project expands enterprise value only if its IRR tracks higher than the blended capital hurdle rate (WACC). Because the project yield (11.20%) scales below financing obligations (13.00%), the NPV tracks directly negative, destroying value."
+            }
+        ];
+
+        // System State Navigation Management Track Variables
+        let currentQuizIndex = 0;
+        let quizUserScore = 0;
+        let isCurrentQuestionAnswered = false;
+
+        /**
+         * Global Architecture Navigation Window Manager
+         */
+        function switchView(target) {
+            const portfolioView = document.getElementById('main-portfolio-view');
+            const appView = document.getElementById('finease-app-view');
+
+            if (target === 'app') {
+                portfolioView.style.display = 'none';
+                appView.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                activateCategory('accounting');
+            } else {
+                appView.style.display = 'none';
+                portfolioView.style.display = 'block';
+                document.querySelector('.finease-portal').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        /**
+         * Category Segment Navigation Processor Rendering Flashcards or Quiz Matrix Layout
+         */
+        function activateCategory(categoryKey) {
+            document.getElementById('tab-accounting').classList.remove('active');
+            document.getElementById('tab-finance').classList.remove('active');
+            document.getElementById('tab-quiz').classList.remove('active');
+            document.getElementById(`tab-${categoryKey}`).classList.add('active');
+
+            const targetGrid = document.getElementById('lexicon-cards-grid');
+            const quizView = document.getElementById('quiz-engine-view');
+
+            if (categoryKey === 'quiz') {
+                targetGrid.style.display = 'none';
+                quizView.style.display = 'block';
+                resetQuizEngineState();
+            } else {
+                quizView.style.display = 'none';
+                targetGrid.style.display = 'grid';
+                targetGrid.innerHTML = ''; 
+
+                lexiconDataset[categoryKey].forEach((item) => {
+                    const cardMarkup = `
+                        <div class="flip-card fade-in-entry" onclick="this.classList.toggle('flipped')">
+                            <div class="flip-card-inner">
+                                <div class="flip-front">
+                                    <h3>${item.term}</h3>
+                                    <div class="flip-hint">Click to Decode</div>
+                                </div>
+                                <div class="flip-back">
+                                    <p><strong>Definition:</strong> ${item.def}</p>
+                                    <p><strong>Real-World Example:</strong> ${item.eg}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    targetGrid.innerHTML += cardMarkup;
+                });
+            }
+        }
+
+        /**
+         * Quiz Simulation Initialization Controller
+         */
+        function resetQuizEngineState() {
+            currentQuizIndex = 0;
+            quizUserScore = 0;
+            renderQuizQuestionBlock();
+        }
+
+        /**
+         * Programmatic DOM Layout Generator Processing Active Quiz Data Models
+         */
+        function renderQuizQuestionBlock() {
+            isCurrentQuestionAnswered = false;
+            const targetNode = document.getElementById('quiz-card-target');
+            
+            if (currentQuizIndex >= quizDataset.length) {
+                targetNode.innerHTML = `
+                    <div class="score-display fade-in-entry">
+                        <span style="font-size: 3.5rem;">🏆</span>
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin: 15px 0 10px 0; color: var(--accent-gold);">Case Simulation Terminated</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 25px;">You resolved <strong>${quizUserScore} out of ${quizDataset.length}</strong> enterprise core cases accurately.</p>
+                        <button class="action-btn" style="max-width: 250px; margin: 0 auto; display: block;" onclick="resetQuizEngineState()">Rerun Case Simulation</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const activeCase = quizDataset[currentQuizIndex];
+            
+            let optionsHTML = '';
+            activeCase.options.forEach((option, idx) => {
+                optionsHTML += `
+                    <button class="quiz-option" onclick="processQuizSelection(this, ${idx})">${option}</button>
+                `;
+            });
+
+            targetNode.innerHTML = `
+                <div class="fade-in-entry">
+                    <span class="quiz-type">${activeCase.type} • Case Challenge ${currentQuizIndex + 1}/${quizDataset.length}</span>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.7rem; margin-bottom: 15px;">${activeCase.title}</h3>
+                    <div class="quiz-scenario">${activeCase.scenario}</div>
+                    <p style="font-weight: 500; font-size: 1.05rem; margin-bottom: 10px;">${activeCase.question}</p>
+                    <div class="quiz-options-list">${optionsHTML}</div>
+                    <div id="quiz-feedback-box" style="display:none;"></div>
+                </div>
+            `;
+        }
+
+        /**
+         * Conditional State Evaluator Managing Interactive Verification Metrics
+         */
+        function processQuizSelection(selectedOptionNode, chosenIndex) {
+            if (isCurrentQuestionAnswered) return; 
+            isCurrentQuestionAnswered = true;
+
+            const activeCase = quizDataset[currentQuizIndex];
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            const allOptionNodes = document.querySelectorAll('.quiz-option');
+
+            if (chosenIndex === activeCase.correct) {
+                selectedOptionNode.classList.add('correct');
+                quizUserScore++;
+                feedbackBox.innerHTML = `
+                    <div class="quiz-explanation fade-in-entry">
+                        <strong style="color: #2ecc71; display: flex; align-items: center; gap: 6px; font-size: 0.95rem; margin-bottom: 6px;">✔ Analytical Assessment Verified</strong>
+                        ${activeCase.explanation}
+                    </div>
+                `;
+            } else {
+                selectedOptionNode.classList.add('wrong');
+                allOptionNodes[activeCase.correct].classList.add('correct');
+                feedbackBox.innerHTML = `
+                    <div class="quiz-explanation fade-in-entry">
+                        <strong style="color: #e74c3c; display: flex; align-items: center; gap: 6px; font-size: 0.95rem; margin-bottom: 6px;">❌ Analytical Discrepancy Found</strong>
+                        ${activeCase.explanation}
+                    </div>
+                `;
+            }
+
+            feedbackBox.innerHTML += `<button class="quiz-nav-btn fade-in-entry" onclick="advanceQuizSequence()">Advance Case →</button>`;
+            feedbackBox.style.display = 'block';
+        }
+
+        /**
+         * Step Iterator Controlling Data Node Offsets
+         */
+        function advanceQuizSequence() {
+            currentQuizIndex++;
+            renderQuizQuestionBlock();
+        }
+
+        /**
+         * Real Estate Underwriting Computational Formula Logic Sandboxing
          */
         function underwriteAssetDeal() {
             const price = parseFloat(document.getElementById('propPrice').value) || 0;
@@ -721,7 +1261,6 @@
             const downPaymentEquity = price * (downPercent / 100);
             const loanAmount = price - downPaymentEquity;
             
-            // Simulated 7% interest-only annual debt service calculation
             const simulatedAnnualDebtService = loanAmount * 0.07;
             const netCashFlowAfterDebt = noi - simulatedAnnualDebtService;
             
@@ -739,13 +1278,6 @@
             document.getElementById('outNoi').innerText = currencyFormatter.format(noi);
             document.getElementById('outCap').innerText = capRate.toFixed(2) + '%';
             document.getElementById('outCoc').innerText = cashOnCash.toFixed(2) + '%';
-        }
-
-        /**
-         * Vocabulary Card Flip Toggle
-         */
-        function toggleVocabularyCard(cardElement) {
-            cardElement.classList.toggle('flipped');
         }
     </script>
 </body>

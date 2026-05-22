@@ -163,14 +163,22 @@
            Projects (Glassmorphism Cards)
            ========================================= */
         .projects {
-            padding: 100px 0;
+            padding: 100px 0 60px 0;
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .section-subhead {
+            text-align: center;
+            color: var(--text-secondary);
+            font-weight: 300;
             margin-bottom: 60px;
+            font-size: 1.05rem;
         }
 
         .projects-grid {
@@ -187,7 +195,7 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 40px;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
         .project-card:hover {
@@ -220,8 +228,223 @@
             color: var(--accent-gold);
             position: absolute;
             left: 0;
-            font-size: 0.8rem;
             top: 3px;
+            font-size: 0.8rem;
+        }
+
+        /* =========================================
+           App 1: The Real Estate Underwriter
+           ========================================= */
+        .app-section {
+            padding: 60px 0;
+        }
+
+        .calculator-block {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 50px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            margin-bottom: 35px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .input-group input {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, #D4AF37, #B58B22);
+            border: none;
+            border-radius: 14px;
+            color: #0B0F19;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            margin-bottom: 40px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
+        }
+
+        .results-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 35px;
+            text-align: center;
+        }
+
+        .result-item {
+            padding: 20px 15px;
+            background: rgba(255,255,255,0.01);
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .result-item label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .result-val {
+            font-size: 1.65rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* =========================================
+           App 2: finEase Vocabulary Cards
+           ========================================= */
+        .finease-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            perspective: 1500px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 260px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card:not(.flipped):hover .flip-card-inner {
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .flip-front, .flip-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flip-front {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .flip-card:hover .flip-front {
+            border-color: rgba(212, 175, 55, 0.25);
+        }
+
+        .flip-front h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .flip-hint {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 18px;
+            opacity: 0.8;
+        }
+
+        .flip-back {
+            background: #101626;
+            transform: rotateY(180deg);
+            text-align: left;
+            justify-content: flex-start;
+            align-items: flex-start;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            overflow-y: auto;
+        }
+
+        .flip-back p {
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            color: #E2E8F0;
+        }
+
+        .flip-back strong {
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .flip-back p:last-child {
+            margin-bottom: 0;
         }
 
         /* =========================================
@@ -230,6 +453,8 @@
         footer {
             text-align: center;
             padding: 80px 0 40px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 40px;
         }
 
         .btn {
@@ -260,10 +485,36 @@
             background: rgba(212, 175, 55, 0.1);
         }
 
+        /* =========================================
+           Responsive Settings
+           ========================================= */
+        @media (max-width: 1024px) {
+            .finease-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 900px) {
             .hero { flex-direction: column-reverse; text-align: center; }
             .projects-grid { grid-template-columns: 1fr; }
             .hero-image { transform: rotate(0); margin-bottom: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .calc-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .results-box {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .finease-grid {
+                grid-template-columns: 1fr;
+            }
+            .calculator-block {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
@@ -301,7 +552,8 @@
 
     <div class="container">
         <section class="projects">
-            <h2 class="section-title">Project</h2>
+            <h2 class="section-title">Projects</h2>
+            <p class="section-subhead">Academic case studies combining corporate strategy and financial frameworks.</p>
             <div class="projects-grid">
                 
                 <div class="project-card">
@@ -329,6 +581,121 @@
             </div>
         </section>
 
+        <section class="app-section">
+            <h2 class="section-title">The Real Estate Underwriter</h2>
+            <p class="section-subhead">A functional property assessment environment evaluating investment quality parameters instantly.</p>
+            
+            <div class="calculator-block">
+                <div class="calc-grid">
+                    <div class="input-group">
+                        <label for="propPrice">Purchase Price ($)</label>
+                        <input type="number" id="propPrice" value="500000" placeholder="e.g. 500000">
+                    </div>
+                    <div class="input-group">
+                        <label for="propDown">Down Payment (%)</label>
+                        <input type="number" id="propDown" value="20" placeholder="e.g. 20">
+                    </div>
+                    <div class="input-group">
+                        <label for="propRent">Annual Gross Rental Income ($)</label>
+                        <input type="number" id="propRent" value="48000" placeholder="e.g. 48000">
+                    </div>
+                    <div class="input-group">
+                        <label for="propExpenses">Annual Operating Expenses ($)</label>
+                        <input type="number" id="propExpenses" value="16000" placeholder="e.g. 16000">
+                    </div>
+                </div>
+                
+                <button class="action-btn" onclick="underwriteAssetDeal()">Underwrite Asset Deal</button>
+                
+                <div class="results-box">
+                    <div class="result-item">
+                        <label>Net Operating Income</label>
+                        <div class="result-val" id="outNoi">$32,000</div>
+                    </div>
+                    <div class="result-item">
+                        <label>Capitalization Rate</label>
+                        <div class="result-val" id="outCap">6.40%</div>
+                    </div>
+                    <div class="result-item">
+                        <label>Cash-on-Cash Return</label>
+                        <div class="result-val" id="outCoc">4.00%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="app-section">
+            <h2 class="section-title">finEase</h2>
+            <p class="section-subhead">Complex financial market mechanics, decoded simply. Click cards to reveal interactive context.</p>
+            
+            <div class="finease-grid">
+                <div class="flip-card" onclick="toggleVocabularyCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <h3>Depreciation</h3>
+                            <div class="flip-hint">Click to Decode</div>
+                    </div>
+                    <div class="flip-back">
+                            <p><strong>Definition:</strong> The systematic allocation of the cost of a tangible asset over its useful lifespan due to wear and tear.</p>
+                            <p><strong>Real-World Example:</strong> Purchasing a brand-new car; the moment you drive it off the lot, its value instantly drops.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="toggleVocabularyCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <h3>Liquidity</h3>
+                            <div class="flip-hint">Click to Decode</div>
+                    </div>
+                    <div class="flip-back">
+                            <p><strong>Definition:</strong> The relative speed and ease with which an asset can be converted directly into cash without losing its value.</p>
+                            <p><strong>Real-World Example:</strong> A checking account balance is highly liquid; a commercial building takes months to sell, making it highly illiquid.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="toggleVocabularyCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <h3>Capital Gains</h3>
+                            <div class="flip-hint">Click to Decode</div>
+                    </div>
+                    <div class="flip-back">
+                            <p><strong>Definition:</strong> The net profit earned from selling an asset for a price higher than its initial purchase cost.</p>
+                            <p><strong>Real-World Example:</strong> Buying a share of stock at $10 and selling it later to another investor when the market price hits $50.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="toggleVocabularyCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <h3>Amortization</h3>
+                            <div class="flip-hint">Click to Decode</div>
+                    </div>
+                    <div class="flip-back">
+                            <p><strong>Definition:</strong> An accounting framework used to systematically reduce the cost basis of an intangible asset or pay down loan obligations via equal monthly installments.</p>
+                            <p><strong>Real-World Example:</strong> A fixed car loan payment where each month a portion pays off the calculated interest and the rest reduces the original debt principal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="toggleVocabularyCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <h3>Stocks & Equities</h3>
+                            <div class="flip-hint">Click to Decode</div>
+                    </div>
+                    <div class="flip-back">
+                            <p><strong>Definition:</strong> Securities representing fractional ownership units in a public corporation, entitling the holder to proportional claims on corporate residual earnings.</p>
+                            <p><strong>Real-World Example:</strong> Owning shares of Apple; you legally own a micro-percentage of the business and profit directly when product innovation drives stock appreciation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <footer>
             <div style="margin-bottom: 40px;">
                 <a href="https://www.linkedin.com/in/kashishparekh-ru/" target="_blank" class="btn">Connect on LinkedIn</a>
@@ -338,5 +705,48 @@
         </footer>
     </div>
 
+    <script>
+        /**
+         * Real Estate Underwriting Engine
+         */
+        function underwriteAssetDeal() {
+            const price = parseFloat(document.getElementById('propPrice').value) || 0;
+            const downPercent = parseFloat(document.getElementById('propDown').value) || 0;
+            const grossRent = parseFloat(document.getElementById('propRent').value) || 0;
+            const expenses = parseFloat(document.getElementById('propExpenses').value) || 0;
+
+            const noi = grossRent - expenses;
+            const capRate = price > 0 ? (noi / price) * 100 : 0;
+            
+            const downPaymentEquity = price * (downPercent / 100);
+            const loanAmount = price - downPaymentEquity;
+            
+            // Simulated 7% interest-only annual debt service calculation
+            const simulatedAnnualDebtService = loanAmount * 0.07;
+            const netCashFlowAfterDebt = noi - simulatedAnnualDebtService;
+            
+            let cashOnCash = 0;
+            if (downPaymentEquity > 0) {
+                cashOnCash = (netCashFlowAfterDebt / downPaymentEquity) * 100;
+            }
+
+            const currencyFormatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            });
+
+            document.getElementById('outNoi').innerText = currencyFormatter.format(noi);
+            document.getElementById('outCap').innerText = capRate.toFixed(2) + '%';
+            document.getElementById('outCoc').innerText = cashOnCash.toFixed(2) + '%';
+        }
+
+        /**
+         * Vocabulary Card Flip Toggle
+         */
+        function toggleVocabularyCard(cardElement) {
+            cardElement.classList.toggle('flipped');
+        }
+    </script>
 </body>
 </html>
